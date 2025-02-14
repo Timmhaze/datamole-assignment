@@ -17,12 +17,11 @@ type FooterProps = {
 };
 
 export const Footer = (props: FooterProps) => {
-    const { todoItems = 0, doneItems = 0 } = props; // F1: default value assignment. If todoItems is not provided, it will default to 0. Same goes for doneItems.
+    const { todoItems = 0, doneItems = 0 } = props; // Default value assignment. If todoItems is not provided, it will default to 0. Same goes for doneItems.
 
     return (
         <FooterStyled>
-            Todo: {todoItems}
-            Done: {todoItems}
+            Todo: {todoItems} | Done: {doneItems}
         </FooterStyled>
     );
 };

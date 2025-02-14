@@ -1,28 +1,19 @@
 {
   "items": [
     {
-      "label": "test",
+      "label": "1",
       "isDone": false,
-      "createdAt": 1739541763908,
       "id": 1
     },
     {
-      "label": "test 2",
+      "label": "2",
       "isDone": false,
-      "createdAt": 1739541771699,
       "id": 2
     },
     {
-      "label": "test 3",
+      "label": "3",
       "isDone": false,
-      "createdAt": 1739541776123,
       "id": 3
-    },
-    {
-      "label": "test 4",
-      "isDone": false,
-      "createdAt": 1739541890752,
-      "id": 4
     }
   ]
 }

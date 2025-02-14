@@ -95,13 +95,15 @@ export const App = () => {
             item.id === id ? { ...item, isDone: !item.isDone } : item
         );
 
+        const updatedItem = updatedItems.find(item => item.id === id);
+
         // Persist the updated item on the server
         fetch(`http://localhost:3000/items/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ isDone: !items.find(item => item.id === id)?.isDone }),
+            body: JSON.stringify({ label: updatedItem?.label, isDone: updatedItem?.isDone }),
         })
             .then((response) => {
                 if (!response.ok) {
@@ -139,13 +141,16 @@ export const App = () => {
             });
     };
 
+    const todoCount = items.filter(item => !item.isDone).length;
+    const doneCount = items.filter(item => item.isDone).length;
+
     return (
         <ThemeProvider>
             <Container>
                 <Layout>
-                    <Header onItemAdd={handleAddItem}>To Do app</Header>
-                    <List items={items} onEditItem={handleEditItem} onToggleDone={handleToggleDone} onDeleteItem={handleDeleteItem}/>
-                    <Footer />
+                    <Header onItemAdd={handleAddItem}>To Do App</Header>
+                    <List items={items} onEditItem={handleEditItem} onToggleDone={handleToggleDone} onDeleteItem={handleDeleteItem} />
+                    <Footer todoItems={todoCount} doneItems={doneCount} />
                 </Layout>
             </Container>
         </ThemeProvider>
