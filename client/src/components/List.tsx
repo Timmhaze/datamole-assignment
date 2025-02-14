@@ -34,9 +34,14 @@ export const List: React.FC<ListProps> = ({ items, onEditItem, onToggleDone, onD
         setEditingItemId(null);
     };
 
+    // Sort items: "todo" items first, then by creation date descending
+    const sortedItems = [...items].sort((a, b) => {
+        return a.isDone ? 1 : -1;
+    });
+
     return (
         <ListStyled>
-            {items.map((item) => (
+            {sortedItems.map((item) => (
                 <div key={item.id}>
                     <input
                         type="checkbox"
