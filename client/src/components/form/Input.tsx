@@ -2,12 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 
 const StyledInput = styled.input`
-    padding: 8px;
-    margin: 8px 0;
+    padding: 3px;
     border: 1px solid ${(props) => props.theme.colors.olive9};
     border-radius: 4px;
     width: 100%;
-    max-width: 300px;
+    max-width: 200px;
 `;
 
 type InputProps = {

@@ -1,45 +1,6 @@
 import React, { useState } from "react";
-import styled from "styled-components";
-import { Button } from "./Button";
-
-const ListItemStyled = styled.div`
-    display: flex;
-    align-items: center; /* Center align the content within each list item */
-    justify-content: space-between; /* Space between the label and buttons */
-    width: 100%;
-    max-width: 600px; /* Limit the width of each list item */
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
-`;
-
-const LabelStyled = styled.label`
-    flex: 1; /* Take up remaining space */
-    margin-left: 10px;
-`;
-
-const InputStyled = styled.input`
-    flex: 1; /* Take up remaining space */
-    margin-left: 10px;
-    max-width: 300px; /* Set a maximum width for the input field */
-    padding: 8px; /* Add padding for better appearance */
-    border: 1px solid #ccc; /* Add border */
-    border-radius: 4px; /* Add border radius */
-    font-size: 16px; /* Set font size */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add subtle box shadow */
-    transition: border-color 0.3s, box-shadow 0.3s; /* Add transition for focus state */
-
-    &:focus {
-        border-color: ${(props) => props.theme.colors.primary}; /* Change border color on focus */
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Add box shadow on focus */
-        outline: none; /* Remove default outline */
-    }
-`;
-
-const ButtonGroup = styled.div`
-    display: flex;
-    gap: 10px; /* Add space between buttons */
-    margin-left: auto; /* Push the button group to the right */
-`;
+import { ButtonStyledPrimary, ButtonStyledConfirm, ButtonStyledCancel } from "./ButtonStyled";
+import { ListItemStyled, LabelStyled, InputStyled, ButtonGroup, ButtonGroupHover, ListItemStyledHover, CheckboxStyled } from "./ListItemStyled";
 
 interface TodoItem {
     label: string;
@@ -74,9 +35,8 @@ export const ListItem: React.FC<ListItemProps> = ({ item, onEditItem, onToggleDo
     };
 
     return (
-        <ListItemStyled>
-            <input
-                type="checkbox"
+        <ListItemStyledHover>
+            <CheckboxStyled
                 checked={item.isDone}
                 onChange={() => onToggleDone(item.id)}
             />
@@ -88,19 +48,19 @@ export const ListItem: React.FC<ListItemProps> = ({ item, onEditItem, onToggleDo
                         onChange={(e) => setNewLabel(e.target.value)}
                     />
                     <ButtonGroup>
-                        <Button onClick={handleSaveClick}>Save</Button>
-                        <Button onClick={handleCancelClick}>Cancel</Button>
+                        <ButtonStyledConfirm onClick={handleSaveClick}>Save</ButtonStyledConfirm>
+                        <ButtonStyledCancel onClick={handleCancelClick}>Cancel</ButtonStyledCancel>
                     </ButtonGroup>
                 </>
             ) : (
                 <>
                     <LabelStyled>{item.label}</LabelStyled>
-                    <ButtonGroup>
-                        <Button onClick={handleEditClick}>Edit</Button>
-                        <Button onClick={() => onDeleteItem(item.id)}>Delete</Button>
-                    </ButtonGroup>
+                    <ButtonGroupHover>
+                        <ButtonStyledPrimary onClick={handleEditClick}>Edit</ButtonStyledPrimary>
+                        <ButtonStyledCancel onClick={() => onDeleteItem(item.id)}>Delete</ButtonStyledCancel>
+                    </ButtonGroupHover>
                 </>
             )}
-        </ListItemStyled>
+        </ListItemStyledHover>
     );
 };

@@ -1,27 +1,21 @@
 {
   "items": [
     {
-      "label": "Cricket",
-      "isDone": false,
-      "createdAt": 1739621459761,
+      "label": "Item 1",
+      "isDone": true,
+      "createdAt": 1739631306738,
       "id": 1
     },
     {
-      "label": "Tereza",
-      "isDone": false,
-      "createdAt": 1739621639535,
-      "id": 2
-    },
-    {
-      "label": "Bella",
-      "isDone": false,
-      "createdAt": 1739621643561,
+      "label": "Item 3",
+      "isDone": true,
+      "createdAt": 1739631315686,
       "id": 3
     },
     {
-      "label": "Tim",
+      "label": "Item 2",
       "isDone": false,
-      "createdAt": 1739625258636,
+      "createdAt": 1739631360169,
       "id": 4
     }
   ]

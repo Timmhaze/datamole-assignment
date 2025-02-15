@@ -5,7 +5,6 @@ import { ListItem } from "./ListItem";
 const ListStyled = styled.div`
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center align the list items */
     width: 100%;
 `;
 

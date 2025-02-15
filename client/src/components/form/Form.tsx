@@ -3,9 +3,13 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 import { Input } from "./Input";
+import { ButtonStyledPrimary, ButtonStyledConfirm, ButtonStyledCancel } from "../ButtonStyled";
 
 const FormStyled = styled.form`
     display: flex;
+    align-items: center;
+    gap: 8px; /* Add space between elements */
+    flex-wrap: wrap; /* Allow wrapping to prevent squishing */
 `;
 
 type FormProps = {
@@ -14,28 +18,28 @@ type FormProps = {
     onCancel: () => void;
 };
 
-export const Form = (props: FormProps) => {
-    const { initialValue, onSubmit, onCancel } = props;
-
+export const Form: React.FC<FormProps> = ({ initialValue, onSubmit, onCancel }) => {
     const [inputValue, setInputValue] = useState(initialValue);
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        if (inputValue.trim()) {
+            onSubmit(inputValue);
+        }
+    };
 
     return (
         <FormStyled
-            onSubmit={(e) => {
-                e.preventDefault();
-                onSubmit(inputValue);
-            }}
-            onReset={() => {
-                onCancel();
-            }}
+            onSubmit={handleSubmit}
+            onReset={onCancel}
         >
             <Input value={inputValue} onValueChange={(value) => setInputValue(value)} />
-            <button type={"submit"}>
+            <ButtonStyledPrimary type="submit" disabled={!inputValue.trim()}>
                 <CheckIcon />
-            </button>
-            <button type={"reset"}>
+            </ButtonStyledPrimary>
+            <ButtonStyledPrimary type="reset">
                 <Cross1Icon />
-            </button>
+            </ButtonStyledPrimary>
         </FormStyled>
     );
 };
