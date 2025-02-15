@@ -1,22 +1,27 @@
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
-const InputStyled = styled.input``;
+const StyledInput = styled.input`
+    padding: 8px;
+    margin: 8px 0;
+    border: 1px solid ${(props) => props.theme.colors.olive9};
+    border-radius: 4px;
+    width: 100%;
+    max-width: 300px;
+`;
 
 type InputProps = {
     value: string;
     onValueChange: (value: string) => void;
 };
 
-export const Input = (props: InputProps) => {
-    const { value, onValueChange } = props;
-
+export const Input: React.FC<InputProps> = ({ value, onValueChange }) => {
     return (
-        <InputStyled
+        <StyledInput
+            type="text"
             value={value}
-            onChange={(e) => {
-                const value = e.currentTarget.value;
-                onValueChange(value);
-            }}
+            onChange={(e) => onValueChange(e.target.value)}
+            placeholder="Add new item"
         />
     );
 };

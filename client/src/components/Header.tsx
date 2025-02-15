@@ -8,6 +8,10 @@ const StyledDiv = styled.header`
     justify-content: space-between;
     align-items: center;
 
+    h1 {
+        flex-grow: 1;
+    }
+
     button {
         all: unset;
         width: 25px;
@@ -17,6 +21,9 @@ const StyledDiv = styled.header`
         border-color: ${(props) => props.theme.colors.olive9};
         border-radius: 50%;
         color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 `;
 
