@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
+import { ListItem } from "./ListItem";
 
 const ListStyled = styled.div`
     display: flex;
     flex-direction: column;
+    align-items: center; /* Center align the list items */
+    width: 100%;
 `;
 
 interface TodoItem {
@@ -21,19 +24,6 @@ type ListProps = {
 };
 
 export const List: React.FC<ListProps> = ({ items, onEditItem, onToggleDone, onDeleteItem }) => {
-    const [editingItemId, setEditingItemId] = useState<number | null>(null);
-    const [newLabel, setNewLabel] = useState<string>("");
-
-    const handleEditClick = (item: TodoItem) => {
-        setEditingItemId(item.id);
-        setNewLabel(item.label || ""); // Ensure newLabel is always a string
-    };
-
-    const handleSaveClick = (id: number) => {
-        onEditItem(id, newLabel);
-        setEditingItemId(null);
-    };
-
     // Sort items: "todo" items first, then by creation date descending
     const sortedItems = [...items].sort((a, b) => {
         return a.isDone ? 1 : -1;
@@ -42,30 +32,13 @@ export const List: React.FC<ListProps> = ({ items, onEditItem, onToggleDone, onD
     return (
         <ListStyled>
             {sortedItems.map((item) => (
-                <div key={item.id}>
-                    <input
-                        type="checkbox"
-                        checked={item.isDone}
-                        onChange={() => onToggleDone(item.id)}
-                    />
-                    {editingItemId === item.id ? (
-                        <>
-                            <input
-                                type="text"
-                                value={newLabel}
-                                onChange={(e) => setNewLabel(e.target.value)}
-                            />
-                            <button onClick={() => handleSaveClick(item.id)}>Save</button>
-                            <button onClick={() => setEditingItemId(null)}>Cancel</button>
-                        </>
-                    ) : (
-                        <>
-                            <label>{item.label}</label>
-                            <button onClick={() => handleEditClick(item)}>Edit</button>
-                            <button onClick={() => onDeleteItem(item.id)}>Delete</button>
-                        </>
-                    )}
-                </div>
+                <ListItem
+                    key={item.id}
+                    item={item}
+                    onEditItem={onEditItem}
+                    onToggleDone={onToggleDone}
+                    onDeleteItem={onDeleteItem}
+                />
             ))}
         </ListStyled>
     );

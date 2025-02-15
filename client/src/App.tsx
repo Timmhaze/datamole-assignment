@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Container } from "./components/Container";
-import { Layout } from "./components/Layout";
+import { Layout, Content, FooterWrapper } from "./components/Layout";
 import { List } from "./components/List";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
@@ -68,13 +68,15 @@ export const App = () => {
             item.id === id ? { ...item, label: newLabel } : item
         );
 
+        const updatedItem = updatedItems.find(item => item.id === id);
+
         // Persist the updated item on the server
         fetch(`http://localhost:3000/items/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ label: newLabel }),
+            body: JSON.stringify({ label: newLabel, isDone: updatedItem?.isDone, createdAt: updatedItem?.createdAt }),
         })
             .then((response) => {
                 if (!response.ok) {
@@ -103,7 +105,7 @@ export const App = () => {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ label: updatedItem?.label, isDone: updatedItem?.isDone }),
+            body: JSON.stringify({ label: updatedItem?.label, isDone: updatedItem?.isDone, createdAt: updatedItem?.createdAt }),
         })
             .then((response) => {
                 if (!response.ok) {
@@ -149,8 +151,12 @@ export const App = () => {
             <Container>
                 <Layout>
                     <Header onItemAdd={handleAddItem}>To Do App</Header>
-                    <List items={items} onEditItem={handleEditItem} onToggleDone={handleToggleDone} onDeleteItem={handleDeleteItem} />
-                    <Footer todoItems={todoCount} doneItems={doneCount} />
+                    <Content>
+                        <List items={items} onEditItem={handleEditItem} onToggleDone={handleToggleDone} onDeleteItem={handleDeleteItem} />
+                    </Content>
+                    <FooterWrapper>
+                        <Footer todoItems={todoCount} doneItems={doneCount} />
+                    </FooterWrapper>
                 </Layout>
             </Container>
         </ThemeProvider>
