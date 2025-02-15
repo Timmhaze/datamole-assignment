@@ -38,6 +38,7 @@ const InputStyled = styled.input`
 const ButtonGroup = styled.div`
     display: flex;
     gap: 10px; /* Add space between buttons */
+    margin-left: auto; /* Push the button group to the right */
 `;
 
 interface TodoItem {
