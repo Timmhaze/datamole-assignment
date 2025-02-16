@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { ButtonStyledPrimary, ButtonStyledConfirm, ButtonStyledCancel } from "./ButtonStyled";
-import { ListItemStyled, LabelStyled, InputStyled, ButtonGroup, ButtonGroupHover, ListItemStyledHover, CheckboxStyled } from "./ListItemStyled";
+import { ButtonStyledGreen, ButtonStyledRed } from "./ButtonStyled";
+import { LabelStyled, InputStyled, ButtonGroup, ButtonGroupHover, ListItemStyledHover, CheckboxStyled } from "./ListItemStyled";
 
 interface TodoItem {
     label: string;
@@ -20,6 +20,7 @@ export const ListItem: React.FC<ListItemProps> = ({ item, onEditItem, onToggleDo
     const [editing, setEditing] = useState<boolean>(false);
     const [newLabel, setNewLabel] = useState<string>(item.label);
 
+    //F4: Handler for clicking on edit button
     const handleEditClick = () => {
         setEditing(true);
     };
@@ -40,24 +41,26 @@ export const ListItem: React.FC<ListItemProps> = ({ item, onEditItem, onToggleDo
                 checked={item.isDone}
                 onChange={() => onToggleDone(item.id)}
             />
+            {/*F4: If editing is true show the form and enable the Save and Cancel buttons*/}
             {editing ? (
                 <>
+                    {/*F4: Input field for the new label when editing an item*/} 
                     <InputStyled
                         type="text"
                         value={newLabel}
                         onChange={(e) => setNewLabel(e.target.value)}
                     />
                     <ButtonGroup>
-                        <ButtonStyledConfirm onClick={handleSaveClick}>Save</ButtonStyledConfirm>
-                        <ButtonStyledCancel onClick={handleCancelClick}>Cancel</ButtonStyledCancel>
+                        <ButtonStyledGreen onClick={handleSaveClick}>Save</ButtonStyledGreen>
+                        <ButtonStyledRed onClick={handleCancelClick}>Cancel</ButtonStyledRed>
                     </ButtonGroup>
                 </>
             ) : (
                 <>
                     <LabelStyled>{item.label}</LabelStyled>
                     <ButtonGroupHover>
-                        <ButtonStyledPrimary onClick={handleEditClick}>Edit</ButtonStyledPrimary>
-                        <ButtonStyledCancel onClick={() => onDeleteItem(item.id)}>Delete</ButtonStyledCancel>
+                        <ButtonStyledGreen onClick={handleEditClick}>Edit</ButtonStyledGreen>
+                        <ButtonStyledRed onClick={() => onDeleteItem(item.id)}>Delete</ButtonStyledRed>
                     </ButtonGroupHover>
                 </>
             )}

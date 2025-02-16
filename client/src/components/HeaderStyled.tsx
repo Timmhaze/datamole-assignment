@@ -13,8 +13,8 @@ export const StyledDiv = styled.header`
     }
 
     .header-content {
-        display: flex;
-        justify-content: space-between;
+        display: flex; 
+        justify-content: space-between; /*U1: flex container, space between to push add button to the right, align items to centre to ensure vertical alignment*/
         align-items: center;
         width: 100%;
     }
@@ -31,7 +31,7 @@ export const StyledDiv = styled.header`
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-left: 10px; /* Add margin to separate from the input field */
+        margin-left: 10px; /*Add margin to separate from the input field*/
     }
 
     hr {

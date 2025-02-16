@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 import { Input } from "./Input";
-import { ButtonStyledPrimary, ButtonStyledConfirm, ButtonStyledCancel } from "../ButtonStyled";
+import { ButtonStyled } from "../ButtonStyled";
 
 const FormStyled = styled.form`
     display: flex;
@@ -21,6 +21,7 @@ type FormProps = {
 export const Form: React.FC<FormProps> = ({ initialValue, onSubmit, onCancel }) => {
     const [inputValue, setInputValue] = useState(initialValue);
 
+    //F3: Handle input for a new todo item, validate the input and submit the new item
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (inputValue.trim()) {
@@ -34,12 +35,12 @@ export const Form: React.FC<FormProps> = ({ initialValue, onSubmit, onCancel }) 
             onReset={onCancel}
         >
             <Input value={inputValue} onValueChange={(value) => setInputValue(value)} />
-            <ButtonStyledPrimary type="submit" disabled={!inputValue.trim()}>
+            <ButtonStyled type="submit" disabled={!inputValue.trim()}>
                 <CheckIcon />
-            </ButtonStyledPrimary>
-            <ButtonStyledPrimary type="reset">
+            </ButtonStyled>
+            <ButtonStyled type="reset">
                 <Cross1Icon />
-            </ButtonStyledPrimary>
+            </ButtonStyled>
         </FormStyled>
     );
 };

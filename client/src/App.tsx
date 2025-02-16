@@ -6,6 +6,7 @@ import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
 import { ThemeProvider } from "./components/providers/ThemeProvider";
 
+// Todo item structure
 interface TodoItem {
     label: string;
     isDone: boolean;
@@ -14,14 +15,14 @@ interface TodoItem {
 }
 
 export const App = () => {
+    //State for todo items
     const [items, setItems] = useState<TodoItem[]>([]);
 
-    useEffect(() => {
-        fetch("http://localhost:3000/items")  // URL for data
+    //F2: Fetch items from server when component mounts, passed as props to List/ListItem component
+    useEffect(() => { 
+        fetch("http://localhost:3000/items")
             .then((response) => {
-                if (!response.ok) {
-                    throw new Error("Network response was not ok");
-                }
+                if (!response.ok) throw new Error("Network error");
                 return response.json();
             })
             .then((data) => {
@@ -29,19 +30,20 @@ export const App = () => {
                 setItems(data);
             })
             .catch((error) => {
-                console.error("There was a problem with the fetch operation:", error);
+                console.error("Fetch error:", error);
             });
     }, []);
 
+    //F3: Logic for adding a todo item
     const handleAddItem = (label: string) => {
         const newItem: TodoItem = {
             label,
             isDone: false,
             createdAt: Date.now(),
-            id: items.length ? items[items.length - 1].id + 1 : 1,
+            id: items.length ? items[items.length - 1].id + 1 : 1
         };
 
-        // Persist the new item on the server
+        //Save new item to server
         fetch("http://localhost:3000/items", {
             method: "POST",
             headers: {
@@ -50,19 +52,18 @@ export const App = () => {
             body: JSON.stringify(newItem),
         })
             .then((response) => {
-                if (!response.ok) {
-                    throw new Error("Network response was not ok");
-                }
+                if (!response.ok) throw new Error("Network error");
                 return response.json();
             })
             .then((data) => {
                 setItems((prevItems) => [...prevItems, data]);
             })
             .catch((error) => {
-                console.error("There was a problem with the fetch operation:", error);
+                console.error("Fetch error:", error);
             });
     };
 
+    //F4: Logic for editing a todo item | pass current ID and new label to the server, parse into an array, find the item with a matching ID and update the label
     const handleEditItem = (id: number, newLabel: string) => {
         const updatedItems = items.map((item) =>
             item.id === id ? { ...item, label: newLabel } : item
@@ -70,7 +71,7 @@ export const App = () => {
 
         const updatedItem = updatedItems.find(item => item.id === id);
 
-        // Persist the updated item on the server
+        //Save updated item to server
         fetch(`http://localhost:3000/items/${id}`, {
             method: "PUT",
             headers: {
@@ -79,19 +80,18 @@ export const App = () => {
             body: JSON.stringify({ label: newLabel, isDone: updatedItem?.isDone, createdAt: updatedItem?.createdAt }),
         })
             .then((response) => {
-                if (!response.ok) {
-                    throw new Error("Network response was not ok");
-                }
+                if (!response.ok) throw new Error("Network error");
                 return response.json();
             })
             .then(() => {
                 setItems(updatedItems);
             })
             .catch((error) => {
-                console.error("There was a problem with the fetch operation:", error);
+                console.error("Fetch error:", error);
             });
     };
 
+    //F5: Logic for toggling a todo item's done status | pass the current ID to the server, parse into an array, find the item with a matching ID and update the isDone status
     const handleToggleDone = (id: number) => {
         const updatedItems = items.map((item) =>
             item.id === id ? { ...item, isDone: !item.isDone } : item
@@ -99,7 +99,7 @@ export const App = () => {
 
         const updatedItem = updatedItems.find(item => item.id === id);
 
-        // Persist the updated item on the server
+        //Save updated item to Server
         fetch(`http://localhost:3000/items/${id}`, {
             method: "PUT",
             headers: {
@@ -108,21 +108,19 @@ export const App = () => {
             body: JSON.stringify({ label: updatedItem?.label, isDone: updatedItem?.isDone, createdAt: updatedItem?.createdAt }),
         })
             .then((response) => {
-                if (!response.ok) {
-                    throw new Error("Network response was not ok");
-                }
+                if (!response.ok) throw new Error("Network error");
                 return response.json();
             })
             .then(() => {
                 setItems(updatedItems);
             })
             .catch((error) => {
-                console.error("There was a problem with the fetch operation:", error);
+                console.error("Fetch error:", error);
             });
     };
 
+    //F6: Item clicked to delete | pass the current ID to the server and delete item with matching ID
     const handleDeleteItem = (id: number) => {
-        // Persist the deletion on the server
         fetch(`http://localhost:3000/items/${id}`, {
             method: "DELETE",
             headers: {
@@ -130,19 +128,18 @@ export const App = () => {
             },
         })
             .then((response) => {
-                if (!response.ok) {
-                    throw new Error("Network response was not ok");
-                }
+                if (!response.ok) throw new Error("Network error");
                 return response.json();
             })
             .then(() => {
                 setItems((prevItems) => prevItems.filter(item => item.id !== id));
             })
             .catch((error) => {
-                console.error("There was a problem with the fetch operation:", error);
+                console.error("Fetch error:", error);
             });
     };
 
+    //F8: Count todo and done items for the footer component
     const todoCount = items.filter(item => !item.isDone).length;
     const doneCount = items.filter(item => item.isDone).length;
 
@@ -154,7 +151,7 @@ export const App = () => {
                     <Content>
                         <List items={items} onEditItem={handleEditItem} onToggleDone={handleToggleDone} onDeleteItem={handleDeleteItem} />
                     </Content>
-                    <FooterWrapper>
+                    <FooterWrapper> {/*B2: Placed FooterWrapper here to ensure it is always at the bottom of the entire layout*/}
                         <Footer todoItems={todoCount} doneItems={doneCount} />
                     </FooterWrapper>
                 </Layout>

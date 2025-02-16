@@ -5,12 +5,10 @@ export const Layout = styled.main`
     flex-direction: column;
     justify-content: flex-start; /* Align items to the top */
     align-items: stretch; /* Ensure children take full width */
-
     width: 100%;
     max-width: 600px;
     margin: 0 30px;
     padding: 20px;
-
     background-color: rgb(255, 255, 255);
     border: 1px solid;
     border-color: ${(props) => props.theme.colors.olive6};
@@ -18,12 +16,12 @@ export const Layout = styled.main`
 `;
 
 export const Content = styled.div`
-    flex-grow: 1; /* Allow the content area to grow and fill the available space */
+    flex-grow: 1; /*Allow the content area to grow and fill the available space*/
     display: flex;
     flex-direction: column;
-    justify-content: flex-start; /* Align items to the top */
+    justify-content: flex-start; /*Align items to the top*/
 `;
 
 export const FooterWrapper = styled.div`
-    margin-top: auto; /* Push the footer to the bottom */
+    margin-top: auto; /*Push the footer to the bottom*/
 `;

@@ -9,7 +9,7 @@ type HeaderProps = {
 };
 
 export const Header: React.FC<HeaderProps> = ({ children, onItemAdd }) => {
-    const [showForm, setShowForm] = useState(false);
+    const [showForm, setShowForm] = useState(false); //F3: Logic for visibility of the plus icon and form
 
     return (
         <StyledDiv>

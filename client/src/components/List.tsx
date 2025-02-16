@@ -23,8 +23,8 @@ type ListProps = {
 };
 
 export const List: React.FC<ListProps> = ({ items, onEditItem, onToggleDone, onDeleteItem }) => {
-    // Sort items: "todo" items first, then by creation date descending
-    const sortedItems = [...items].sort((a, b) => {
+    //F7: Sort items by isDone property, then is passed as props to ListItem component in that order
+    const sortedItems = [...items].sort((a) => {
         return a.isDone ? 1 : -1;
     });
 
